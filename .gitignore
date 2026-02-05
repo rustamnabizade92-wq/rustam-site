@@ -53,3 +53,11 @@ next-env.d.ts
 *.MOV
 *.m4v
 *.webm
+
+# Large media
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.m4v
+*.webm
