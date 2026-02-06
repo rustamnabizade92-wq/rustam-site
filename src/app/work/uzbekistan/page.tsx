@@ -17,13 +17,12 @@ type CityPost = {
 export default function UzbekistanProjectPage() {
   const { t } = useI18n();
 
-  // ✅ ПУТИ: public/work/uzbekistan/...
   const HERO = "/work/uzbekistan/hero.jpg";
   const COVER = "/work/uzbekistan/cover.jpg";
   const PREVIEW = "/work/uzbekistan/preview.MP4";
 
-  // ✅ ВСТАВЬ свой YouTube ID
-  const YOUTUBE_ID = "YOUR_VIDEO_ID";
+  // ✅ YouTube ID from your link:
+  const YOUTUBE_ID = "O01YUOVQ_xc";
 
   const gallery = useMemo(
     () => [
@@ -37,55 +36,54 @@ export default function UzbekistanProjectPage() {
     []
   );
 
-  // ✅ BLOG — города (пока текст-заглушка, потом заменишь)
   const posts: CityPost[] = useMemo(
     () => [
       {
+        slug: "tashkent",
+        title: "Tashkent — Modern rhythm & street life",
+        date: "Chapter 1",
+        cover: "/work/uzbekistan/2.jpg",
+        bullets: ["Urban mood & movement", "Street portraits", "First tone-setting sequences"],
+        story: [
+          "Tashkent is where the film starts with energy — modern lines, fast transitions, and real street moments.",
+          "I focused on pacing and small details: hands, textures, signage, and natural interactions.",
+          "This chapter sets the rhythm before we move into the ancient cities.",
+        ],
+      },
+      {
         slug: "samarkand",
         title: "Samarkand — Blue domes & morning light",
-        date: "Day 1",
+        date: "Chapter 2",
         cover: "/work/uzbekistan/1.jpg",
-        bullets: [
-          "Registan at sunrise",
-          "Textures: tiles, shadows, silk",
-          "Street portraits & calm moments",
-        ],
+        bullets: ["Registan at sunrise", "Textures: tiles, shadows, silk", "Calm portraits in natural light"],
         story: [
           "Samarkand feels like a scene designed by time — geometry, light and silence.",
-          "I filmed the first sequences early morning to keep the mood documentary and clean.",
-          "Portraits were shot in natural light, minimal direction, real moments.",
+          "I filmed early morning to keep the mood documentary and clean, with minimal crowds and soft light.",
+          "Portraits were shot with minimal direction — real moments, strong composition, quiet atmosphere.",
         ],
       },
       {
         slug: "bukhara",
         title: "Bukhara — Old streets, warm tones",
-        date: "Day 2",
+        date: "Chapter 3",
         cover: "/work/uzbekistan/3.jpg",
-        bullets: [
-          "Old town walk, handcraft details",
-          "Warm color palette",
-          "Cinematic street sequences",
-        ],
+        bullets: ["Old town walk, handcraft details", "Warm color palette", "Cinematic street sequences"],
         story: [
           "Bukhara is slower. It’s about details — doors, hands, fabrics, quiet streets.",
-          "For the film, I focused on small movements and texture transitions.",
-          "This is where the photo story becomes “editorial” — close shots + atmosphere.",
+          "For the film, I focused on small movements and texture transitions to keep it intimate.",
+          "This is where the photo story becomes editorial: close shots + atmosphere.",
         ],
       },
       {
         slug: "khiva",
-        title: "Khiva — The city museum, living inside history",
-        date: "Day 3",
+        title: "Khiva — Living inside history",
+        date: "Chapter 4",
         cover: "/work/uzbekistan/5.jpg",
-        bullets: [
-          "Walls, arches, symmetry",
-          "Golden hour silhouettes",
-          "Final chapter feel",
-        ],
+        bullets: ["Walls, arches, symmetry", "Golden hour silhouettes", "Final chapter mood"],
         story: [
-          "Khiva looks like a set — but it’s alive. The best light was late afternoon.",
+          "Khiva looks like a set — but it’s alive. The best light was late afternoon, with long shadows and gold tones.",
           "I used longer takes for the film and stronger contrast for photos.",
-          "This became the closing mood: heritage, scale, and calm.",
+          "This became the closing mood: heritage, scale, and calm — a quiet ending.",
         ],
       },
     ],
@@ -130,30 +128,15 @@ export default function UzbekistanProjectPage() {
           </div>
         </div>
 
-        {/* Cinematic banner */}
         <div className="mx-auto max-w-6xl px-6 pb-12">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-              <video
-                className="h-[520px] w-full object-cover"
-                src={PREVIEW}
-                muted
-                loop
-                playsInline
-                autoPlay
-                poster={HERO}
-              />
+              <video className="h-[520px] w-full object-cover" src={PREVIEW} muted loop playsInline autoPlay poster={HERO} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                <div className="text-[11px] uppercase tracking-[0.22em] text-white/75">
-                  {t("uzb.kicker")}
-                </div>
-                <div className="mt-2 text-3xl md:text-4xl font-semibold text-white hero-title">
-                  {t("uzb.title")}
-                </div>
-                <div className="mt-3 text-[11px] uppercase tracking-[0.22em] text-white/70">
-                  Film • Photo • Blog
-                </div>
+                <div className="text-[11px] uppercase tracking-[0.22em] text-white/75">{t("uzb.kicker")}</div>
+                <div className="mt-2 text-3xl md:text-4xl font-semibold text-white hero-title">{t("uzb.title")}</div>
+                <div className="mt-3 text-[11px] uppercase tracking-[0.22em] text-white/70">Film • Photo • Blog</div>
               </div>
             </div>
           </Reveal>
@@ -162,17 +145,13 @@ export default function UzbekistanProjectPage() {
 
       {/* TABS */}
       <section className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-wrap items-center gap-2 rounded-2xl border p-2"
-             style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-          <TabButton active={tab === "film"} onClick={() => setTab("film")}>
-            Film
-          </TabButton>
-          <TabButton active={tab === "photo"} onClick={() => setTab("photo")}>
-            Photos
-          </TabButton>
-          <TabButton active={tab === "blog"} onClick={() => setTab("blog")}>
-            Blog (Cities)
-          </TabButton>
+        <div
+          className="flex flex-wrap items-center gap-2 rounded-2xl border p-2"
+          style={{ borderColor: "var(--border)", background: "var(--card)" }}
+        >
+          <TabButton active={tab === "film"} onClick={() => setTab("film")}>Film</TabButton>
+          <TabButton active={tab === "photo"} onClick={() => setTab("photo")}>Photos</TabButton>
+          <TabButton active={tab === "blog"} onClick={() => setTab("blog")}>Blog (Cities)</TabButton>
 
           <div className="ml-auto hidden md:flex items-center gap-3 pr-2">
             <span className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
@@ -182,16 +161,12 @@ export default function UzbekistanProjectPage() {
         </div>
       </section>
 
-      {/* TAB CONTENT */}
+      {/* CONTENT */}
       <section className="mx-auto max-w-6xl px-6 py-12">
         {tab === "film" && (
           <div>
-            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
-              Film
-            </div>
-            <h2 className="mt-3 text-2xl md:text-3xl font-semibold">
-              Full film
-            </h2>
+            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>Film</div>
+            <h2 className="mt-3 text-2xl md:text-3xl font-semibold">Full film</h2>
 
             <div className="mt-6">
               <Reveal>
@@ -209,14 +184,10 @@ export default function UzbekistanProjectPage() {
 
         {tab === "photo" && (
           <div>
-            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
-              Photo story
-            </div>
-            <h2 className="mt-3 text-2xl md:text-3xl font-semibold">
-              Editorial gallery
-            </h2>
+            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>Photo story</div>
+            <h2 className="mt-3 text-2xl md:text-3xl font-semibold">Editorial gallery</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
-              Vertical shots look premium in a masonry layout (like an editorial). Add more photos anytime — just drop files into the folder and we will extend the list.
+              Vertical shots look premium in a masonry layout (like an editorial).
             </p>
 
             <div className="mt-8 columns-1 sm:columns-2 gap-6 [column-fill:_balance]">
@@ -231,25 +202,16 @@ export default function UzbekistanProjectPage() {
 
         {tab === "blog" && (
           <div>
-            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
-              Blog
-            </div>
-            <h2 className="mt-3 text-2xl md:text-3xl font-semibold">
-              Cities & chapters
-            </h2>
+            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>Blog</div>
+            <h2 className="mt-3 text-2xl md:text-3xl font-semibold">Cities & chapters</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
               Each city has its own story: what we filmed, what we photographed, and what the mood was.
             </p>
 
             <div className="mt-10 grid gap-8 lg:grid-cols-12">
-              {/* left list */}
               <div className="lg:col-span-4">
-                <div className="rounded-2xl border p-4"
-                     style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-                  <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
-                    Chapters
-                  </div>
-
+                <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
+                  <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>Chapters</div>
                   <div className="mt-3 space-y-2">
                     {posts.map((p) => (
                       <a
@@ -268,29 +230,22 @@ export default function UzbekistanProjectPage() {
                 </div>
               </div>
 
-              {/* right posts */}
               <div className="lg:col-span-8 space-y-16">
                 {posts.map((p) => (
                   <section key={p.slug} id={p.slug} className="scroll-mt-28">
                     <Reveal>
-                      <div className="relative overflow-hidden rounded-2xl border"
-                           style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-                        <img src={p.cover} alt="" className="h-[360px] w-full object-cover" />
+                      <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
+                        <img src={p.cover} alt="" className="h-[360px] w-full object-cover" loading="lazy" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                         <div className="absolute bottom-0 p-6">
-                          <div className="text-[11px] uppercase tracking-[0.22em] text-white/70">
-                            {p.date ?? "Chapter"}
-                          </div>
-                          <div className="mt-2 text-2xl md:text-3xl font-semibold text-white hero-title">
-                            {p.title}
-                          </div>
+                          <div className="text-[11px] uppercase tracking-[0.22em] text-white/70">{p.date ?? "Chapter"}</div>
+                          <div className="mt-2 text-2xl md:text-3xl font-semibold text-white hero-title">{p.title}</div>
                         </div>
                       </div>
                     </Reveal>
 
                     <div className="mt-6 grid gap-6 md:grid-cols-2">
-                      <div className="rounded-2xl border p-5"
-                           style={{ borderColor: "var(--border)", background: "var(--card)" }}>
+                      <div className="rounded-2xl border p-5" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
                         <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
                           Highlights
                         </div>
@@ -301,8 +256,7 @@ export default function UzbekistanProjectPage() {
                         </ul>
                       </div>
 
-                      <div className="rounded-2xl border p-5"
-                           style={{ borderColor: "var(--border)", background: "var(--card)" }}>
+                      <div className="rounded-2xl border p-5" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
                         <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
                           Story
                         </div>

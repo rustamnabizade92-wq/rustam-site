@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { translations, type Lang } from "@/content/translations";
 
 type CtxType = {
@@ -15,13 +15,30 @@ function getByPath(obj: any, path: string) {
   return path.split(".").reduce((acc, part) => acc?.[part], obj);
 }
 
+const STORAGE_KEY = "rustam-site-lang";
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Lang>("en");
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY) as Lang | null;
+      if (saved && (saved === "en" || saved === "az" || saved === "ru")) {
+        setLang(saved);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch {}
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const t = useMemo(() => {
     return (key: string) => {
       const value = getByPath(translations[lang], key);
-      // если ключа нет — возвращаем красивую заглушку вместо "work.title"
       if (value == null) return key.split(".").pop() ?? key;
       return String(value);
     };

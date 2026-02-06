@@ -16,53 +16,47 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE = "https://rustamnabizade.com";
+
 export const metadata: Metadata = {
-  // можно оставить, это для OG/Twitter и др.
-  metadataBase: new URL("https://rustamnabizade.com"),
+  metadataBase: new URL(SITE),
   title: "Rustam Nabizade — Travel Filmmaker",
   description:
     "Cinematic travel films, documentary-style storytelling and visual campaigns for destinations and premium travel brands.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Rustam Nabizade",
+    url: SITE,
+    title: "Rustam Nabizade — Travel Filmmaker",
+    description:
+      "Cinematic travel films and visual stories for destinations, tourism boards and premium brands.",
+    images: [
+      { url: "/hero.jpg", width: 1200, height: 630, alt: "Rustam Nabizade — Travel Filmmaker" },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rustam Nabizade — Travel Filmmaker",
+    description:
+      "Cinematic travel films and visual stories for destinations and premium travel brands.",
+    images: ["/hero.jpg"],
+  },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const SITE = "https://rustamnabizade.com";
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        {/* ✅ CANONICAL — гарантированно */}
-        <link rel="canonical" href={`${SITE}/`} />
-
-        {/* ✅ базовые meta */}
-        <meta name="robots" content="index,follow" />
-
-        {/* ✅ OG / Twitter (по желанию, но полезно) */}
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Rustam Nabizade" />
-        <meta property="og:url" content={`${SITE}/`} />
-        <meta property="og:title" content="Rustam Nabizade — Travel Filmmaker" />
-        <meta
-          property="og:description"
-          content="Cinematic travel films and visual stories for destinations, tourism boards and premium brands."
-        />
-        <meta property="og:image" content={`${SITE}/hero.jpg`} />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Rustam Nabizade — Travel Filmmaker" />
-        <meta
-          name="twitter:description"
-          content="Cinematic travel films and visual stories for destinations and premium brands."
-        />
-        <meta name="twitter:image" content={`${SITE}/hero.jpg`} />
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://www.youtube.com" />
+        <link rel="dns-prefetch" href="https://i.ytimg.com" />
       </head>
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}>
         <LanguageProvider>
           <ToastProvider>
             <Header />

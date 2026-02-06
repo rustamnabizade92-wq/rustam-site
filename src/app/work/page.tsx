@@ -1,5 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+
 import { projects } from "@/content/projects";
 import { useI18n } from "@/components/LanguageProvider";
 
@@ -18,21 +22,33 @@ function WorkCard({
   cover: string;
   previewVideo?: string;
 }) {
+  // Only play/load video when user actually hovers
+  const [isHover, setIsHover] = useState(false);
+
   return (
-    <a
+    <Link
       href={href}
       className="group relative overflow-hidden rounded-2xl border"
       style={{ background: "var(--card)", borderColor: "var(--border)" }}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      prefetch
     >
-      <img
+      {/* Cover image (optimized) */}
+      <Image
         src={cover}
         alt={title}
+        width={1400}
+        height={900}
+        sizes="(max-width: 768px) 100vw, 50vw"
         className={`h-[520px] w-full object-cover transition-opacity duration-300 ${
           previewVideo ? "group-hover:opacity-0" : ""
         }`}
+        priority={false}
       />
 
-      {previewVideo && (
+      {/* Hover preview video (only mounted on hover) */}
+      {previewVideo && isHover && (
         <video
           className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           src={previewVideo}
@@ -40,6 +56,7 @@ function WorkCard({
           loop
           playsInline
           autoPlay
+          preload="none"
         />
       )}
 
@@ -63,20 +80,22 @@ function WorkCard({
           Open story →
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
 export default function WorkPage() {
   const { t } = useI18n();
-
   const featured = projects[0];
 
   return (
     <main style={{ background: "var(--bg)", color: "var(--fg)" }}>
       {/* HERO / INTRO */}
       <section className="mx-auto max-w-6xl px-6 pt-28 pb-10">
-        <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
+        <div
+          className="text-[11px] uppercase tracking-[0.22em]"
+          style={{ color: "var(--muted)" }}
+        >
           {t("nav.work")}
         </div>
 
@@ -86,20 +105,31 @@ export default function WorkPage() {
           </h1>
 
           <div className="flex flex-wrap gap-3">
-            <a
+            <Link
               href="/services"
               className="rounded-full border px-5 py-3 text-[11px] uppercase tracking-[0.22em] transition hover:opacity-90"
-              style={{ borderColor: "var(--border)", background: "var(--card)", color: "var(--fg)" }}
+              style={{
+                borderColor: "var(--border)",
+                background: "var(--card)",
+                color: "var(--fg)",
+              }}
+              prefetch
             >
               Services →
-            </a>
-            <a
+            </Link>
+
+            <Link
               href="/contact"
               className="rounded-full border px-5 py-3 text-[11px] uppercase tracking-[0.22em] transition hover:opacity-90"
-              style={{ borderColor: "var(--border)", background: "var(--fg)", color: "var(--bg)" }}
+              style={{
+                borderColor: "var(--border)",
+                background: "var(--fg)",
+                color: "var(--bg)",
+              }}
+              prefetch
             >
               Contact →
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -111,15 +141,20 @@ export default function WorkPage() {
       {/* FEATURED PANEL */}
       {featured && (
         <section className="mx-auto max-w-6xl px-6 pb-10">
-          <a
+          <Link
             href={`/work/${featured.slug}`}
             className="group relative block overflow-hidden rounded-2xl border"
             style={{ borderColor: "var(--border)", background: "var(--card)" }}
+            prefetch
           >
-            <img
+            <Image
               src={featured.cover}
               alt={t(featured.titleKey)}
+              width={1600}
+              height={900}
+              sizes="(max-width: 768px) 100vw, 960px"
               className="h-[420px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -133,7 +168,7 @@ export default function WorkPage() {
                 Open →
               </div>
             </div>
-          </a>
+          </Link>
         </section>
       )}
 
@@ -154,49 +189,79 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* EXTRA PANELS (the “other panels” you mentioned) */}
+      {/* EXTRA PANELS */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-2xl border p-7" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
+          <div
+            className="rounded-2xl border p-7"
+            style={{ borderColor: "var(--border)", background: "var(--card)" }}
+          >
+            <div
+              className="text-[11px] uppercase tracking-[0.22em]"
+              style={{ color: "var(--muted)" }}
+            >
               Packages
             </div>
             <div className="mt-3 text-lg font-semibold">Film + Photo bundles</div>
             <p className="mt-3 leading-relaxed" style={{ color: "var(--muted)" }}>
               Hero film, social cutdowns, documentary photo story — delivered fast and premium.
             </p>
-            <a href="/services" className="mt-6 inline-flex text-[11px] uppercase tracking-[0.22em] hover:opacity-90"
-               style={{ color: "var(--fg)" }}>
+            <Link
+              href="/services"
+              className="mt-6 inline-flex text-[11px] uppercase tracking-[0.22em] hover:opacity-90"
+              style={{ color: "var(--fg)" }}
+              prefetch
+            >
               View services →
-            </a>
+            </Link>
           </div>
 
-          <div className="rounded-2xl border p-7" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
+          <div
+            className="rounded-2xl border p-7"
+            style={{ borderColor: "var(--border)", background: "var(--card)" }}
+          >
+            <div
+              className="text-[11px] uppercase tracking-[0.22em]"
+              style={{ color: "var(--muted)" }}
+            >
               About
             </div>
             <div className="mt-3 text-lg font-semibold">Documentary-first style</div>
             <p className="mt-3 leading-relaxed" style={{ color: "var(--muted)" }}>
               Real moments, sound design, clean compositions — storytelling over “content”.
             </p>
-            <a href="/about" className="mt-6 inline-flex text-[11px] uppercase tracking-[0.22em] hover:opacity-90"
-               style={{ color: "var(--fg)" }}>
+            <Link
+              href="/about"
+              className="mt-6 inline-flex text-[11px] uppercase tracking-[0.22em] hover:opacity-90"
+              style={{ color: "var(--fg)" }}
+              prefetch
+            >
               Read bio →
-            </a>
+            </Link>
           </div>
 
-          <div className="rounded-2xl border p-7" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-            <div className="text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
+          <div
+            className="rounded-2xl border p-7"
+            style={{ borderColor: "var(--border)", background: "var(--card)" }}
+          >
+            <div
+              className="text-[11px] uppercase tracking-[0.22em]"
+              style={{ color: "var(--muted)" }}
+            >
               Start
             </div>
             <div className="mt-3 text-lg font-semibold">Book a shoot</div>
             <p className="mt-3 leading-relaxed" style={{ color: "var(--muted)" }}>
               Share destination, dates, and deliverables — I’ll respond with a plan + quote structure.
             </p>
-            <a href="/contact" className="mt-6 inline-flex text-[11px] uppercase tracking-[0.22em] hover:opacity-90"
-               style={{ color: "var(--fg)" }}>
+            <Link
+              href="/contact"
+              className="mt-6 inline-flex text-[11px] uppercase tracking-[0.22em] hover:opacity-90"
+              style={{ color: "var(--fg)" }}
+              prefetch
+            >
               Contact →
-            </a>
+            </Link>
           </div>
         </div>
       </section>
