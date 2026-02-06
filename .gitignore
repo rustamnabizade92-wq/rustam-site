@@ -69,3 +69,4 @@ next-env.d.ts
 *.MOV
 *.m4v
 *.webm
+.env*.local
