@@ -26,6 +26,27 @@ type FAQ = {
   a: string;
 };
 
+/* ---------- logo helper: supports SVG + PNG (fallback) ---------- */
+function LogoAuto({ name, alt }: { name: string; alt: string }) {
+  return (
+    <picture>
+      <source srcSet={`/logos/${name}.svg`} type="image/svg+xml" />
+      <img
+        src={`/logos/${name}.png`}
+        alt={alt}
+        className="
+          h-10 md:h-12 object-contain
+          filter brightness-0 invert
+          opacity-70
+          transition-all duration-300
+          group-hover:opacity-100
+        "
+        loading="lazy"
+      />
+    </picture>
+  );
+}
+
 export default function ServicesPage() {
   const { t } = useI18n();
   const toast = useToast();
@@ -101,13 +122,17 @@ export default function ServicesPage() {
     []
   );
 
-  // 1) LOGOS
+  // ✅ TRUSTED BY / LOGOS (SVG preferred, PNG fallback)
   const logos = useMemo(
     () => [
-      { src: "/logos/goturkiye.svg", alt: "GoTürkiye" },
-      { src: "/logos/azerbaijan-tourism.svg", alt: "Azerbaijan Tourism" },
-      { src: "/logos/air-arabia.svg", alt: "Air Arabia" },
-      { src: "/logos/dji.svg", alt: "DJI" },
+      { name: "azerbaijan-tourism", alt: "Azerbaijan Tourism" },
+      { name: "azerbaijan-airlines", alt: "Azerbaijan Airlines" },
+      { name: "experience-azerbaijan", alt: "Experience Azerbaijan" },
+      { name: "azerbaijan-photographers-union", alt: "Azerbaijan Photographers Union" }, // ✅ added
+      { name: "goturkiye", alt: "GoTürkiye" },
+      { name: "turkish-airlines", alt: "Turkish Airlines" },
+      { name: "canon", alt: "Canon" }, // ✅ added
+      { name: "dji", alt: "DJI" },
     ],
     []
   );
@@ -280,51 +305,36 @@ export default function ServicesPage() {
       </section>
 
       {/* TRUSTED BY */}
-<section className="mb-28 border-t border-white/10 pt-14">
-  <p className="mb-10 text-xs uppercase tracking-[0.32em] text-white/40">
-    Trusted by / Collaborations
-  </p>
+      <section className="mb-28 border-t border-white/10 pt-14">
+        <p className="mb-10 text-xs uppercase tracking-[0.32em] text-white/40">
+          Trusted by / Collaborations
+        </p>
 
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-    {[
-      { src: "/logos/azerbaijan-tourism.png", alt: "Azerbaijan Tourism" },
-      { src: "/logos/dji.png", alt: "DJI" },
-      { src: "/logos/goturkiye.png", alt: "GoTürkiye" },
-      { src: "/logos/turkish-airlines.png", alt: "Turkish Airlines" },
-    ].map((logo) => (
-      <div
-        key={logo.src}
-        className="group relative flex items-center justify-center rounded-2xl
-                   border border-white/10 bg-white/[0.04] px-8 py-10
-                   backdrop-blur-md transition
-                   hover:bg-white/[0.08] hover:border-white/20"
-      >
-        <img
-          src={logo.src}
-          alt={logo.alt}
-          className="
-            h-10 md:h-12 object-contain
-            filter brightness-0 invert
-            opacity-70
-            transition-all duration-300
-            group-hover:opacity-100
-          "
-        />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {logos.map((logo) => (
+            <div
+              key={logo.name}
+              className="group relative flex items-center justify-center rounded-2xl
+                         border border-white/10 bg-white/[0.04] px-8 py-10
+                         backdrop-blur-md transition
+                         hover:bg-white/[0.08] hover:border-white/20"
+            >
+              <LogoAuto name={logo.name} alt={logo.alt} />
 
-        {/* soft premium glow */}
-        <div
-          className="pointer-events-none absolute inset-0 rounded-2xl
-                     opacity-0 group-hover:opacity-100 transition
-                     shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_20px_80px_rgba(255,255,255,0.06)]"
-        />
-      </div>
-    ))}
-  </div>
+              {/* soft premium glow */}
+              <div
+                className="pointer-events-none absolute inset-0 rounded-2xl
+                           opacity-0 group-hover:opacity-100 transition
+                           shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_20px_80px_rgba(255,255,255,0.06)]"
+              />
+            </div>
+          ))}
+        </div>
 
-  <p className="mt-8 text-xs text-white/35">
-    Logos shown for portfolio and collaboration reference.
-  </p>
-</section>
+        <p className="mt-8 text-xs text-white/35">
+          Logos shown for portfolio and collaboration reference.
+        </p>
+      </section>
 
       {/* PACKAGES */}
       <section className="mx-auto max-w-6xl px-6 pb-14">
