@@ -31,16 +31,19 @@ export default function Home() {
         <div className="mx-auto max-w-[1600px] px-6 pt-10">
           <div className="relative overflow-hidden rounded-[24px] bg-black">
             <div className="relative h-[620px] md:h-[720px]">
-              {/* Video layer (parallax) */}
+              {/* YouTube video layer (parallax) */}
               <div ref={heroRef} className="absolute inset-0">
-                <video
-                  className="h-full w-full object-cover"
-                  src="/hero.mp4"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster="/hero.jpg"
+                <iframe
+                  className="h-full w-full scale-[1.25] object-cover"
+                  src={
+                    "https://www.youtube.com/embed/pOh_q4U2Ewc" +
+                    "?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" +
+                    "&loop=1&playlist=pOh_q4U2Ewc&playsinline=1&rel=0" +
+                    "&iv_load_policy=3&disablekb=1"
+                  }
+                  title="Hero background video"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  referrerPolicy="strict-origin-when-cross-origin"
                 />
               </div>
 
